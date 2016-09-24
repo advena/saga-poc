@@ -1,16 +1,17 @@
 package validity.period.steps;
 
-import cucumber.annotation.en.And;
-import cucumber.annotation.en.Given;
-import cucumber.annotation.en.Then;
-import cucumber.annotation.en.When;
 import cucumber.api.CucumberOptions;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import game.aggregate.GameAggregate;
 import game.data.GameDataDto;
 import game.query.model.GameQueryModel;
 import game.repository.GameRepository;
 import payment.data.PaymementsDataDto;
 import payment.query.model.PaymentQueryModel;
+import saga.ValidityExtensionSaga;
 import user.aggregate.UserAggregate;
 import user.data.UserDataDto;
 import user.query.model.UserQueryModel;
@@ -19,7 +20,6 @@ import validity.period.ValidityPeriod;
 import validity.period.aggregate.ValidityPeriodAggregate;
 import validity.period.command.ValidityPeriodExtensionCommand;
 import validity.period.repository.ValidityPeriodRepository;
-import saga.ValidityExtensionSaga;
 
 import java.math.BigDecimal;
 import java.time.YearMonth;
