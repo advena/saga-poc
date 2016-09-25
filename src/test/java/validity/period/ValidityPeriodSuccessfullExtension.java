@@ -1,4 +1,4 @@
-package validity.period.steps;
+package validity.period;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.java.en.And;
@@ -16,7 +16,6 @@ import user.aggregate.UserAggregate;
 import user.data.UserDataDto;
 import user.query.model.UserQueryModel;
 import user.repository.UserRepository;
-import validity.period.ValidityPeriod;
 import validity.period.aggregate.ValidityPeriodAggregate;
 import validity.period.command.ValidityPeriodExtensionCommand;
 import validity.period.repository.ValidityPeriodRepository;
@@ -50,8 +49,8 @@ public class ValidityPeriodSuccessfullExtension {
 
     @Given("^(\\d+) user has initially (\\d+) points$")
     public void userInitiallyHasPoints(long userId, int points) throws Throwable {
-        user = new UserAggregate(userId);
-        user.addPoints(points);
+//        user = new UserAggregate(userId);
+//        user.addPoints(points);
     }
 
     @And("^User owns (\\d+) Game$")
