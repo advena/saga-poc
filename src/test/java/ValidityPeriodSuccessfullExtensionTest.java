@@ -11,6 +11,6 @@ import org.junit.runner.RunWith;
         format = { "pretty","html: cucumber-html-reports",
                 "json: cucumber-html-reports/cucumber.json" },
         dryRun = false,
-        glue = "validity.period" )
+        glue = "validity.period.extension" )
 public class ValidityPeriodSuccessfullExtensionTest {
 }

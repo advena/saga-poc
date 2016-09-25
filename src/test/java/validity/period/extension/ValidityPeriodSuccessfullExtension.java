@@ -1,4 +1,4 @@
-package validity.period;
+package validity.period.extension;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.java.en.And;
@@ -16,6 +16,7 @@ import user.aggregate.UserAggregate;
 import user.data.UserDataDto;
 import user.query.model.UserQueryModel;
 import user.repository.UserRepository;
+import validity.period.ValidityPeriod;
 import validity.period.aggregate.ValidityPeriodAggregate;
 import validity.period.command.ValidityPeriodExtensionCommand;
 import validity.period.repository.ValidityPeriodRepository;
