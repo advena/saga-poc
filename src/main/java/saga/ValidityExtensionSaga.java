@@ -1,6 +1,6 @@
 package saga;
 
-import validity.period.command.ValidityPeriodExtensionCommand;
+import saga.command.ValidityPeriodExtensionCommand;
 
 /**
  * Created by advena on 23.09.16.

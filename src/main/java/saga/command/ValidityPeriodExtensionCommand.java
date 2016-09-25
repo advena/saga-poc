@@ -1,4 +1,4 @@
-package validity.period.command;
+package saga.command;
 
 import validity.period.ValidityPeriod;
 

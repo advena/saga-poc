@@ -1,14 +1,15 @@
-package validity.period.change.command;
+package validity.period.command;
 
-import lombok.AllArgsConstructor;
+import common.Command;
+import lombok.Value;
 
 import java.time.YearMonth;
 
 /**
  * Created by advena on 25.09.16.
  */
-@AllArgsConstructor
-public class ValidityPeriodChange {
+@Value
+public class ValidityPeriodChange implements Command{
     private final YearMonth start;
     private final YearMonth end;
 

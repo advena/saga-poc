@@ -12,13 +12,12 @@ import game.repository.GameRepository;
 import payment.data.PaymementsDataDto;
 import payment.query.model.PaymentQueryModel;
 import saga.ValidityExtensionSaga;
+import saga.command.ValidityPeriodExtensionCommand;
 import user.aggregate.UserAggregate;
 import user.data.UserDataDto;
 import user.query.model.UserQueryModel;
 import user.repository.UserRepository;
 import validity.period.ValidityPeriod;
-import validity.period.aggregate.ValidityPeriodAggregate;
-import validity.period.command.ValidityPeriodExtensionCommand;
 import validity.period.repository.ValidityPeriodRepository;
 
 import java.math.BigDecimal;
@@ -72,7 +71,7 @@ public class ValidityPeriodSuccessfullExtension {
         YearMonth start = YearMonth.parse(startMonth);
         YearMonth end = YearMonth.parse(endMonth);
         gameValidityPeriod = new ValidityPeriod(start, end);
-        validityPeriodRepository.save(new ValidityPeriodAggregate(gameId, gameValidityPeriod));
+//        validityPeriodRepository.save(new ValidityPeriodAggregate(gameId, gameValidityPeriod));
     }
 
     @When("^(\\d+) User extends Validity Period for (\\d+) Game up to \"([^\"]*)\" and \"([^\"]*)\"$")
