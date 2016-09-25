@@ -28,7 +28,10 @@ public class UserAggregate {
     }
 
     private boolean validate(AddPoints pointsToAdd) {
-        return true;
+        if (pointsToAdd.getPoints() >= 0) {
+            return true;
+        }
+        return false;
     }
 
     public void addGame(long gameId) {

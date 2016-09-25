@@ -9,4 +9,5 @@ Feature: User has the ability to add points to him
       | 0              | 100           | 100               |
       | 100            | 0             | 100               |
       | 100            | 100           | 200               |
+      | 100            | -100          | 100               |
 
