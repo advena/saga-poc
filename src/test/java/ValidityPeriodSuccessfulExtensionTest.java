@@ -7,10 +7,11 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(  monochrome = true,
-        features = "src/test/features/",
+        features = "src/test/features/validity-period-successful-extension.feature",
         format = { "pretty","html: cucumber-html-reports",
                 "json: cucumber-html-reports/cucumber.json" },
         dryRun = false,
         glue = "validity.period.extension" )
-public class ValidityPeriodSuccessfullExtensionTest {
+public class ValidityPeriodSuccessfulExtensionTest {
+
 }

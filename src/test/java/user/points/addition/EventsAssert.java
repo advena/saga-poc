@@ -15,6 +15,11 @@ public class EventsAssert implements user.aggregate.UserAggregate.Events {
     @Override
     public void emit(UserAggregate.PointsAdded event) {
         pointsAddedEvents.add(event);
+        handle(event);
+    }
+
+    public void handle(UserAggregate.PointsAdded event) {
+
     }
 
     @Override

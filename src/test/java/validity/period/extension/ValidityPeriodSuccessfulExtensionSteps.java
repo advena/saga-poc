@@ -1,6 +1,6 @@
 package validity.period.extension;
 
-import cucumber.api.CucumberOptions;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -9,15 +9,18 @@ import game.aggregate.GameAggregate;
 import game.data.GameDataDto;
 import game.query.model.GameQueryModel;
 import game.repository.GameRepository;
+import payment.aggregate.PaymentAggregate;
 import payment.data.PaymementsDataDto;
 import payment.query.model.PaymentQueryModel;
 import saga.ValidityExtensionSaga;
 import saga.command.ValidityPeriodExtensionCommand;
 import user.aggregate.UserAggregate;
+import user.aggregate.command.AddPoints;
 import user.data.UserDataDto;
 import user.query.model.UserQueryModel;
 import user.repository.UserRepository;
 import validity.period.ValidityPeriod;
+import validity.period.aggregate.ValidityPeriodAggregate;
 import validity.period.repository.ValidityPeriodRepository;
 
 import java.math.BigDecimal;
@@ -30,11 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by advena on 23.09.16.
  */
 
-@CucumberOptions(glue = {"test.java.validity.period"}, features = {
-        "classpath:test/features/validity-period-change.feature"})
-public class ValidityPeriodSuccessfullExtension {
+public class ValidityPeriodSuccessfulExtensionSteps {
 
-    private UserAggregate user;
+    private UserAggregate userAggregate;
     private GameAggregate game;
     private ValidityPeriod gameValidityPeriod;
     private ValidityPeriod extendedValidityPeriod;
@@ -46,17 +47,29 @@ public class ValidityPeriodSuccessfullExtension {
     private PaymentQueryModel paymentQueryModel;
     private UserQueryModel userQueryModel;
     private GameQueryModel gameQueryModel;
+    private user.points.addition.EventsAssert userEventsHandler;
+    private validity.period.change.EventsAssert validityPeriodEventsHandler;
+    private ValidityPeriodAggregate validityPeriodAggregate;
+    private payment.EventsAssert paymentsEvenetHandler;
+    private PaymentAggregate paymentAggregate;
+
+    @Before
+    public void setUp() {
+        userEventsHandler = new user.points.addition.EventsAssert();
+        userAggregate = new UserAggregate(1L, userEventsHandler);
+        validityPeriodEventsHandler = new validity.period.change.EventsAssert();
+        paymentsEvenetHandler = new payment.EventsAssert();
+        paymentAggregate = new PaymentAggregate(1L, paymentsEvenetHandler);
+    }
 
     @Given("^(\\d+) user has initially (\\d+) points$")
     public void userInitiallyHasPoints(long userId, int points) throws Throwable {
-//        user = new UserAggregate(userId);
-//        user.addPoints(points);
+        userAggregate.addPoints(new AddPoints(points));
     }
 
     @And("^User owns (\\d+) Game$")
     public void userOwnsGame(long gameId) throws Throwable {
-        user.addGame(gameId);
-        userRepository.save(user);
+        userAggregate.addGame(gameId);
     }
 
     @And("^(\\d+) Game cost for one month is (\\d+)$")
@@ -71,12 +84,12 @@ public class ValidityPeriodSuccessfullExtension {
         YearMonth start = YearMonth.parse(startMonth);
         YearMonth end = YearMonth.parse(endMonth);
         gameValidityPeriod = new ValidityPeriod(start, end);
-//        validityPeriodRepository.save(new ValidityPeriodAggregate(gameId, gameValidityPeriod));
+        validityPeriodAggregate = new ValidityPeriodAggregate(gameId, gameValidityPeriod, validityPeriodEventsHandler);
     }
 
     @When("^(\\d+) User extends Validity Period for (\\d+) Game up to \"([^\"]*)\" and \"([^\"]*)\"$")
     public void userExtendsValidityPeriodForGameUpToAnd(long userId, long gameId, String extnededStart, String extendedEnd) throws Throwable {
-        validityExtensionSaga = ValidityExtensionSaga.generateSaga();
+        validityExtensionSaga = ValidityExtensionSaga.generateSaga(userAggregate, validityPeriodAggregate, paymentAggregate);
         YearMonth start = YearMonth.parse(extnededStart);
         YearMonth end = YearMonth.parse(extendedEnd);
         extendedValidityPeriod = new ValidityPeriod(start, end);
